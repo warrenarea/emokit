@@ -249,8 +249,10 @@ def hid_enumerate():
                 is_emotiv = True
 
             if is_emotiv:
-                serial_number = device.serial_number
-                path = device.path
+                useDevice = raw_input("Use this device? [Y]es? ")
+                if useDevice.upper() == "Y":
+                    serial_number = device.serial_number
+                    path = device.path
         except:
             pass
     return path, serial_number
@@ -619,9 +621,12 @@ class Emotiv(object):
                 if "EEG Signals" in device.product_name:
                     is_emotiv = True
                 if is_emotiv:
-                    devices.append(device)
+                    print "\n" + device.product_name + " Found!\n"
+                    useDevice = raw_input("Use this device? [Y]es? ")
+                    if useDevice.upper() == "Y":
+                        devices.append(device)
             if len(devices) > 0:
-                device = devices[1]
+                device = devices[0]
                 device.open()
                 self.serial_number = device.serial_number
                 device.set_raw_data_handler(self.handler)
